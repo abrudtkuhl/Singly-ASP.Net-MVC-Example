@@ -5,12 +5,23 @@
 }
 
 <div class="row">
-    <div class="span3">
-        <div class="well">
-            <h4>Connected Services</h4>
+    <div class="span12">
+        
+        <div data-bind="visible: !hasProfiles()">
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Oh No!</strong> You better connect with some services below!
+            </div>
         </div>
-    </div>
-    <div class="span9">
+        <div data-bind="visible: hasProfiles()">
+            <div class="well">
+                <h3>Connected Services</h3>
+                <ul>
+                    <li>loop thru connected service</li>
+                </ul>    
+            </div>
+        </div>
+
         <h3>Connect To Services</h3>
         <a href="/auth/index/twitter" class="btn btn-primary">Connect With Twitter</a> 
         <a href="/auth/index/linkedin" class="btn btn-primary">Connect With LinkedIn</a> 
@@ -20,11 +31,24 @@
 </div>
 
 @section scripts {
-<script>
-    $(document).ready(function() {
-        var viewModel = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
-        console.log(viewModel);
-        ko.applyBindings(viewModel);
-    });
-</script>   
+    <script>
+        $(document).ready(function() {
+            var ViewModel = function (data) {
+                console.log(data);
+                var self = this;
+
+                ko.mapping.fromJS(data || null, {}, this);
+
+                self.hasProfiles = ko.computed(function() {
+                    if (data == null)
+                        return false;
+
+                    return true;
+                });
+            };
+
+            var viewModel = new ViewModel(@Html.Raw(Json.Encode(Model)));
+            ko.applyBindings(viewModel);
+        });
+    </script>   
 }
