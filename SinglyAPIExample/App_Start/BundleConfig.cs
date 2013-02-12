@@ -1,5 +1,7 @@
 ﻿using System.Web.Optimization;
 
+[assembly: WebActivator.PostApplicationStartMethod(typeof(SinglyAPIExample.App_Start.BundleConfig), "RegisterBundles")]
+
 namespace SinglyAPIExample.App_Start
 {
     public class BundleConfig
@@ -7,10 +9,10 @@ namespace SinglyAPIExample.App_Start
         public static void RegisterBundles()
         {
             BundleTable.Bundles.Add(
-                new ScriptBundle("~/bundles/scripts")
-                .Include(
-                "~/Sripts/jquery-1.9.2*",
-                "~/Scripts/knockout*"
+                new ScriptBundle("~/bundles/scripts").Include(
+                    "~/Scripts/jquery-{version}.js",
+                    "~/Scripts/knockout-{version}.js",
+                    "~/Scripts/knockout.mapping-latest.js"
                 ));
         }
     }

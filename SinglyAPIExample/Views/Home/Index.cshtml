@@ -4,4 +4,27 @@
     ViewBag.Title = "title";
 }
 
-<h2>title</h2>
+<div class="row">
+    <div class="span3">
+        <div class="well">
+            <h4>Connected Services</h4>
+        </div>
+    </div>
+    <div class="span9">
+        <h3>Connect To Services</h3>
+        <a href="/auth/index/twitter" class="btn btn-primary">Connect With Twitter</a> 
+        <a href="/auth/index/linkedin" class="btn btn-primary">Connect With LinkedIn</a> 
+        <a href="/auth/index/facebook" class="btn btn-primary">Connect With Facebook</a> 
+        <a href="/auth/index/dwolla" class="btn btn-primary">Connect With Dwolla</a>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    $(document).ready(function() {
+        var viewModel = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));
+        console.log(viewModel);
+        ko.applyBindings(viewModel);
+    });
+</script>   
+}
